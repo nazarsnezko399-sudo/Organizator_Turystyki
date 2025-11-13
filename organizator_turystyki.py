@@ -53,7 +53,8 @@ class TravelOrganizerApp:
 
         # Zmienne przechowujące aktualnie aktywne elementy GUI
         self.current_frame = None
-
+        self.status_var = tk.StringVar(master)
+        self.status_var.set("Oczekuje na płatność")
 
         self.create_main_menu()
 
@@ -264,15 +265,14 @@ class TravelOrganizerApp:
 
             self.status_var.set(reservation_data['status_platnosci'])
             self.status_option = ttk.Combobox(self.details_frame, textvariable=self.status_var,
-                                              values=["Oczekuje na płatność", "Zapłacono przelewem",
-                                                      "Zapłacono gotówką"])
+                                              values=["Oczekuje na płatność", "Zapłacono przelewem","Zapłacono gotówką"])
             self.status_option.grid(row=5, column=1, padx=5, pady=5)
 
             tk.Button(self.details_frame, text="Zapisz Aktualizację",
                       command=lambda: self.update_payment_in_db(reservation_id)).grid(row=6, column=0, columnspan=2,
                                                                                       pady=10)
         else:
-            tk.Label(self.details_frame, text=f"Brak rezerwacji o ID: {reservation_id}").pack(pady=10)
+            tk.Label(self.details_frame, text=f"Brak rezerwacji o ID: {reservation_id}").grid(row=0, column=0, columnspan=2, pady=10)
 
     def update_payment_in_db(self, reservation_id):
         """Zapisuje zaktualizowane dane płatności do bazy."""
